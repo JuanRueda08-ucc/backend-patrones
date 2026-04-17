@@ -26,16 +26,21 @@ public class UserAccount {
         this.usageHistory = new HashMap<>();
     }
 
-    // Returns today's record, creating it if it does not exist yet
-    public DailyUsageRecord getOrCreateTodayRecord() {
-        return usageHistory.computeIfAbsent(LocalDate.now(), DailyUsageRecord::new);
+    // Returns the record for the given date, creating it if it does not exist yet
+    public DailyUsageRecord getOrCreateRecordForDate(LocalDate date) {
+        return usageHistory.computeIfAbsent(date, DailyUsageRecord::new);
     }
 
-    // Records token consumption and daily usage — called by the quota proxy
-    public void recordUsage(int tokensConsumed) {
-        DailyUsageRecord today = getOrCreateTodayRecord();
-        today.addTokens(tokensConsumed);
-        today.addRequest();
+    // Convenience alias for today's record
+    public DailyUsageRecord getOrCreateTodayRecord() {
+        return getOrCreateRecordForDate(LocalDate.now());
+    }
+
+    // Records token consumption and daily usage for a specific date — called by the quota proxy
+    public void recordDailyUsage(LocalDate date, int tokensConsumed) {
+        DailyUsageRecord record = getOrCreateRecordForDate(date);
+        record.addTokens(tokensConsumed);
+        record.addRequest();
         this.monthlyTokensUsed += tokensConsumed;
     }
 

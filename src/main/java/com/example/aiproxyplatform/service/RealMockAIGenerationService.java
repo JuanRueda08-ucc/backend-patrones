@@ -2,13 +2,10 @@ package com.example.aiproxyplatform.service;
 
 import com.example.aiproxyplatform.dto.GenerationRequest;
 import com.example.aiproxyplatform.dto.GenerationResponse;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
-@Service
 public class RealMockAIGenerationService implements AIGenerationService {
 
     private static final int LATENCY_MS = 1200;
@@ -22,7 +19,12 @@ public class RealMockAIGenerationService implements AIGenerationService {
             "Simulated generation complete. Your prompt was received and processed."
     );
 
+    private final TokenEstimatorService tokenEstimator;
     private final Random random = new Random();
+
+    public RealMockAIGenerationService(TokenEstimatorService tokenEstimator) {
+        this.tokenEstimator = tokenEstimator;
+    }
 
     @Override
     public GenerationResponse generate(GenerationRequest request) {
@@ -30,17 +32,14 @@ public class RealMockAIGenerationService implements AIGenerationService {
 
         simulateLatency();
 
-        String generatedText = generateMockText();
-        int tokensConsumed = calculateTokens(prompt);
-
         return GenerationResponse.builder()
                 .userId(request.getUserId())
                 .prompt(prompt)
-                .generatedText(generatedText)
-                .tokensConsumed(tokensConsumed)
-                .plan("UNKNOWN")           // filled by proxy in the next phase
-                .remainingRequestsInWindow(0)   // filled by proxy in the next phase
-                .remainingMonthlyTokens(0)      // filled by proxy in the next phase
+                .generatedText(generateMockText())
+                .tokensConsumed(tokenEstimator.estimate(prompt))
+                .plan("UNKNOWN")                // filled by quota proxy
+                .remainingRequestsInWindow(0)   // filled by rate-limit proxy
+                .remainingMonthlyTokens(0)      // filled by quota proxy
                 .timestamp(LocalDateTime.now())
                 .build();
     }
@@ -55,9 +54,5 @@ public class RealMockAIGenerationService implements AIGenerationService {
 
     private String generateMockText() {
         return MOCK_RESPONSES.get(random.nextInt(MOCK_RESPONSES.size()));
-    }
-
-    private int calculateTokens(String prompt) {
-        return Math.max(10, (int) Math.ceil(prompt.length() / 4.0));
     }
 }

@@ -6,11 +6,15 @@ import com.example.aiproxyplatform.exception.RateLimitExceededException;
 import com.example.aiproxyplatform.exception.UserNotFoundException;
 import com.example.aiproxyplatform.model.UserAccount;
 import com.example.aiproxyplatform.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class RateLimitProxyService implements AIGenerationService {
+
+    private static final Logger log = LoggerFactory.getLogger(RateLimitProxyService.class);
 
     private final AIGenerationService target;
     private final UserRepository userRepository;
@@ -50,6 +54,8 @@ public class RateLimitProxyService implements AIGenerationService {
     private void validateRateLimit(UserAccount user) {
         if (!user.hasRequestsAvailableInWindow()) {
             long retryAfter = calculateRetryAfterSeconds(user);
+            log.warn("Rate limit exceeded — user: '{}', plan: {}, retryAfter: {}s.",
+                    user.getUserId(), user.getPlanType().name(), retryAfter);
             throw new RateLimitExceededException(
                     "Rate limit exceeded for plan " + user.getPlanType().name()
                     + ". Limit: " + user.getPlanType().getRequestsPerMinute() + " req/min.",
@@ -65,13 +71,15 @@ public class RateLimitProxyService implements AIGenerationService {
     }
 
     private GenerationResponse enrichResponse(GenerationResponse response, UserAccount user) {
+        int remaining = user.getPlanType().isUnlimited() ? -1 : user.getRemainingRequestsInWindow();
+
         return GenerationResponse.builder()
                 .userId(response.getUserId())
                 .prompt(response.getPrompt())
                 .generatedText(response.getGeneratedText())
                 .tokensConsumed(response.getTokensConsumed())
                 .plan(user.getPlanType().name())
-                .remainingRequestsInWindow(user.getRemainingRequestsInWindow())
+                .remainingRequestsInWindow(remaining)
                 .remainingMonthlyTokens(response.getRemainingMonthlyTokens())
                 .timestamp(response.getTimestamp())
                 .build();

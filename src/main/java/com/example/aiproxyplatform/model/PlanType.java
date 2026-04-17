@@ -21,4 +21,8 @@ public enum PlanType {
     public int getMonthlyTokens() {
         return monthlyTokens;
     }
+
+    public boolean isUnlimited() {
+        return this.monthlyTokens == Integer.MAX_VALUE;
+    }
 }
