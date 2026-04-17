@@ -31,12 +31,16 @@ public class UserAccount {
         return usageHistory.computeIfAbsent(LocalDate.now(), DailyUsageRecord::new);
     }
 
-    // Single entry point for recording a completed request
+    // Records token consumption and daily usage — called by the quota proxy
     public void recordUsage(int tokensConsumed) {
         DailyUsageRecord today = getOrCreateTodayRecord();
         today.addTokens(tokensConsumed);
         today.addRequest();
         this.monthlyTokensUsed += tokensConsumed;
+    }
+
+    // Increments the rate-limit window counter — called by the rate-limit proxy
+    public void incrementRequestsInWindow() {
         this.requestsUsedInWindow++;
     }
 
