@@ -1,2 +1,17 @@
 com\example\aiproxyplatform\AiProxyPlatformApplication.class
+com\example\aiproxyplatform\dto\GenerationResponse$GenerationResponseBuilder.class
+com\example\aiproxyplatform\dto\QuotaHistoryItemResponse$QuotaHistoryItemResponseBuilder.class
+com\example\aiproxyplatform\model\UserAccount.class
+com\example\aiproxyplatform\dto\GenerationResponse.class
+com\example\aiproxyplatform\dto\QuotaHistoryItemResponse.class
+com\example\aiproxyplatform\dto\ErrorResponse$ErrorResponseBuilder.class
+com\example\aiproxyplatform\dto\QuotaStatusResponse.class
+com\example\aiproxyplatform\dto\QuotaStatusResponse$QuotaStatusResponseBuilder.class
+com\example\aiproxyplatform\dto\GenerationRequest$GenerationRequestBuilder.class
+com\example\aiproxyplatform\dto\UpgradePlanRequest.class
 com\example\aiproxyplatform\controller\HealthController.class
+com\example\aiproxyplatform\dto\ErrorResponse.class
+com\example\aiproxyplatform\model\PlanType.class
+com\example\aiproxyplatform\dto\UpgradePlanRequest$UpgradePlanRequestBuilder.class
+com\example\aiproxyplatform\dto\GenerationRequest.class
+com\example\aiproxyplatform\model\DailyUsageRecord.class
