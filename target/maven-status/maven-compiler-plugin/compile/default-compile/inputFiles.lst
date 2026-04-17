@@ -9,6 +9,8 @@ C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\ja
 C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\model\UserAccount.java
 C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\dto\QuotaHistoryItemResponse.java
 C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\dto\UpgradePlanRequest.java
+C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\service\AIGenerationService.java
 C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\AiProxyPlatformApplication.java
+C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\service\RealMockAIGenerationService.java
 C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\dto\GenerationRequest.java
 C:\Users\Edwin Rueda\Documents\Patrones de Software\backend-patrones\src\main\java\com\example\aiproxyplatform\repository\UserRepository.java

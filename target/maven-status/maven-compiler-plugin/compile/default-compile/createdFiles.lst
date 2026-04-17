@@ -1,3 +1,4 @@
+com\example\aiproxyplatform\service\RealMockAIGenerationService.class
 com\example\aiproxyplatform\AiProxyPlatformApplication.class
 com\example\aiproxyplatform\dto\GenerationResponse$GenerationResponseBuilder.class
 com\example\aiproxyplatform\dto\QuotaHistoryItemResponse$QuotaHistoryItemResponseBuilder.class
@@ -16,5 +17,6 @@ com\example\aiproxyplatform\model\PlanType.class
 com\example\aiproxyplatform\dto\UpgradePlanRequest$UpgradePlanRequestBuilder.class
 com\example\aiproxyplatform\dto\GenerationRequest.class
 com\example\aiproxyplatform\repository\InMemoryUserRepository.class
+com\example\aiproxyplatform\service\AIGenerationService.class
 com\example\aiproxyplatform\model\DailyUsageRecord.class
 com\example\aiproxyplatform\exception\UserNotFoundException.class
